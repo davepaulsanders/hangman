@@ -70,7 +70,9 @@ Sorry, "{guess}" is not in the word!  Try again!
     def checkGameStatus(self):
         if self.strikes == 0:
             self.playing = False
-            print("Sorry, you lost!")
+            print('''Sorry, you lost!
+
+''')
             self.playAgain()
 
         if "___" not in self.board:
