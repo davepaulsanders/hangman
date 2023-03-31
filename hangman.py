@@ -1,6 +1,6 @@
 import random
 import os
-
+import time
 listOfWords = ["penny", "guitar", "world", "space", "python", "megan", "sanders", "love"]
 
 class Hangman:
@@ -44,11 +44,12 @@ Previous guesses: {self.guesses}
             
     def guess(self):
         guess = input("Guess a letter:  ")
-        if guess in self.guesses:
+        if guess in self.guesses or guess in self.board:
             print(f'''
             
 You already guessed "{guess}"!
 ''')
+            time.sleep(1)
         else:
             if guess in self.answer:
                 indexes = []
@@ -63,7 +64,8 @@ You already guessed "{guess}"!
 
 Sorry, "{guess}" is not in the word!  Try again!       
 ''')
-            self.strikes -= 1
+                time.sleep(1)
+                self.strikes -= 1
 
     def checkGameStatus(self):
         if self.strikes == 0:
