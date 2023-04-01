@@ -1,8 +1,15 @@
-import random, os, time
+'Hangman Game'
 
-listOfWords = ["penny", "guitar", "world", "space", "python", "megan", "sanders", "love"]
+import random
+import os
+import time
+
+listOfWords = ["penny", "guitar", "world",
+               "space", "python", "megan", "sanders", "love"]
+
 
 class Hangman:
+    'class for hangman game'
 
     def __init__(self, answer):
         self.playing = True
@@ -10,9 +17,10 @@ class Hangman:
         self.board = ["___"] * len(answer)
         self.strikes = 15
         self.guesses = []
-    
-    # Print the board each loop
-    def printCurrentBoard(self):
+        # Print the board each loop
+
+    def print_current_board(self):
+        'Print the board each loop'
 
         print(f'''
 Strikes left: {self.strikes}
@@ -21,10 +29,10 @@ Previous guesses: {self.guesses}
 
 {self.board}
 ''')
-    
-    # Game loop
+
     def start(self):
-        while self.playing == True:
+        "Game loop"
+        while self.playing:
             os.system("clear")
             print('''
 
@@ -39,12 +47,12 @@ Previous guesses: {self.guesses}
 ╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝
 
 ''')
-            self.printCurrentBoard()
+            self.print_current_board()
             self.guess()
-            self.checkGameStatus()
+            self.check_game_status()
 
-    # take input for guess and determine result     
     def guess(self):
+        'take input for guess and determine result'
         while True:
             guess = input("Guess a letter:  ")
             if guess.isalpha():
@@ -77,17 +85,16 @@ Sorry, "{guess}" is not in the word!  Try again!
                 time.sleep(1)
                 self.strikes -= 1
 
-    # check if game is over each loop
-    def checkGameStatus(self):
-        
+    def check_game_status(self):
+        'check if game is over each loop'
         # if the player runs out of chances
         if self.strikes == 0:
             self.playing = False
             print('''Sorry, you lost!
 
 ''')
-            self.playAgain()
-        
+            self.play_again()
+
         # if the word is completed
         if "___" not in self.board:
             self.playing = False
@@ -97,29 +104,29 @@ Sorry, "{guess}" is not in the word!  Try again!
 
 CONGRATS, YOU WON!  THE WORD WAS "{"".join(self.answer)}"
 
-''') 
-            self.playAgain()
-            
-    # check if user wants to play again if game ends
-    def playAgain(self):
+''')
+            self.play_again()
+
+    def play_again(self):
+        'check if user wants to play again if game ends'
         while True:
-            playAgain = input("Play again?  ")
-            if playAgain == "y" or playAgain == "n":
+            play_again = input("Play again?  ")
+            if play_again in ["y", "n"]:
                 break
             else:
                 print('Please choose "y" or "n"')
 
-        if playAgain == "y":
-            newGame()
-        if playAgain == "n":
+        if play_again == "y":
+            new_game()
+        if play_again == "n":
             raise SystemExit
-    
-# creates a game instance with a new answers and starts it
-def newGame():
-    newWord = random.choice(listOfWords)
-    game = Hangman(newWord)
+
+
+def new_game():
+    'creates a game instance with a new answers and starts it'
+    new_word = random.choice(listOfWords)
+    game = Hangman(new_word)
     game.start()
 
-newGame()
 
-
+new_game()
