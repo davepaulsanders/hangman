@@ -1,6 +1,5 @@
-import random
-import os
-import time
+import random, os, time
+
 listOfWords = ["penny", "guitar", "world", "space", "python", "megan", "sanders", "love"]
 
 class Hangman:
@@ -50,6 +49,8 @@ Previous guesses: {self.guesses}
             guess = input("Guess a letter:  ")
             if guess.isalpha():
                 break
+            else:
+                print("You have to guess a letter!")
             # if guess has been previously guessed
         if guess in self.guesses or guess in self.board:
             print(f'''
@@ -101,21 +102,18 @@ CONGRATS, YOU WON!  THE WORD WAS "{"".join(self.answer)}"
             
     # check if user wants to play again if game ends
     def playAgain(self):
-        playAgain = input("Play again?  ")
+        while True:
+            playAgain = input("Play again?  ")
+            if playAgain == "y" or playAgain == "n":
+                break
+            else:
+                print('Please choose "y" or "n"')
 
-        if playAgain != "y" or playAgain != "n":
-            print('''
-            
-Please type "y" or "n"!
-
-''')
-            self.playAgain()
-        else:
-            if playAgain == "y":
-                newGame()
-            if playAgain == "n":
-                raise SystemExit
-
+        if playAgain == "y":
+            newGame()
+        if playAgain == "n":
+            raise SystemExit
+    
 # creates a game instance with a new answers and starts it
 def newGame():
     newWord = random.choice(listOfWords)
